@@ -10,8 +10,12 @@ var url = 'mongodb://localhost:27017';
 app.use(bodyParser.urlencoded({extended: false}));
 
 module.exports = (function(app){
+	app.get('/', function(req, res){
+		console.log("GET Method");
+		res.end("GET Method");
+	});
 
-    app.post('/user_', function(req, res){
+    app.post('/login', function(req, res){
         console.log("username: "+req.body.username);
         console.log("password: "+req.body.password);
 
@@ -31,8 +35,11 @@ module.exports = (function(app){
                         }else{
                             authorization ="no authorization"
                         }
-                        res.end("Login success\nname:"+user.name+"\nage:"+user.age+
-                        "\ngender:"+user.gender+"\nAuthorization:"+authorization);
+                        res.json({"Login success":true,
+						"Name":user.name,
+						"Age":user.age,
+                        "Gender":user.gender,
+						"Authorization":authorization});
                 }else{
                     console.log("Credentials wrong");
                     res.end("Password incorrect");
